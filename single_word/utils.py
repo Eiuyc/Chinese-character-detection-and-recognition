@@ -129,7 +129,8 @@ class Tools():
         score = self.get_score(src, ch)
 
         # create normal
-        normal = self.get_normal(ch, 'red', 'white')
+        # normal = self.get_normal(ch, 'red', 'white')
+        normal = self.get_normal(ch, 'blue', 'white') # RGB to BGR, blue shows like red
         normal = np.array(normal)
         # get visual result
         result = Image.fromarray(cv2.addWeighted(normal, 0.2, ori, 0.8, 0))

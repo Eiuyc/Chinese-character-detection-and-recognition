@@ -42,4 +42,6 @@ Box coordinates are in normalized xywh format (from 0 - 1).
 # Result
 |original|processed|
 |:-:|:-:|
-|![](doc_imgs/ori.jpg)|![](runs/detect/exp/test.jpg)|
+|![](doc_imgs/ori.jpg)|![](doc_imgs/result.jpg)|
+
+The standard character will be printed to corresponding area, with a confidence and a score for each detected boxes.
