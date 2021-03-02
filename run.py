@@ -22,7 +22,7 @@ tools = Tools('single_word/data/')
 
 def detect(save_img=False):
     source, weights, view_img, save_txt, imgsz = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size
-
+    save_txt = True
     # Directories
     save_dir = Path(increment_path(Path(opt.project) / opt.name, exist_ok=opt.exist_ok))  # increment run
     (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
@@ -84,20 +84,20 @@ def detect(save_img=False):
                 for *xyxy, conf, cls in reversed(det):
                     c1, c2 = (int(xyxy[0]), int(xyxy[1])), (int(xyxy[2]), int(xyxy[3]))
                     word = im0[c1[1]:c2[1], c1[0]:c2[0]] # y x
-                    score, result = tools.evaluate_word(word, modelc)
+                    index, score, result = tools.evaluate_word(word, modelc)
                     result = np.array(result)
                     result = cv2.resize(result, (abs(c1[0] - c2[0]), abs(c1[1] - c2[1]))) # w h
                     im0[c1[1]:c2[1], c1[0]:c2[0]] = result
                     if save_txt:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
-                        line = (cls, *xywh, conf, score) if opt.save_conf else (cls, *xywh, score)  # label format
+                        line = (cls, *xywh, conf, score, ch) if opt.save_conf else (cls, *xywh, score, index)  # label format
                         with open(txt_path + '.txt', 'a') as f:
                             f.write(('%g ' * len(line)).rstrip() % line + '\n')
 
                     if save_img or view_img:  # Add bbox to image
                         # label = f'{names[int(cls)]} {conf:.2f}'
                         label = f'{conf:.2f} {score*100:.2f}'
-                        plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
+                        plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
 
             # Print time (inference + NMS)
             print(f'{s}Done. ({t2 - t1:.3f}s)')
