@@ -134,4 +134,4 @@ class Tools():
         normal = np.array(normal)
         # get visual result
         result = Image.fromarray(cv2.addWeighted(normal, 0.2, ori, 0.8, 0))
-        return index, score, result
+        return ch, score, result

@@ -4,7 +4,6 @@ from IPython.display import display
 from torchvision.transforms import ToPILImage
 toPIL = ToPILImage()
 import torch
-torch.cuda.set_device(0)
 import cv2, numpy as np
 from PIL import Image
 from utils import Tools
