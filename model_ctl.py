@@ -56,6 +56,5 @@ class Young():
                 
                 label = f'{conf:.2f} {score*100:.2f}'
                 plot_one_box(xyxy, im0, label=label, color=(0,0,255), line_thickness=1)
-        # cv2.imwrite('zz.jpg', im0)
 
         return pred_result, im0
